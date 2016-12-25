@@ -1,0 +1,26 @@
+.comment-children .comment-children {
+  margin-left: 1em;
+}
+.comment {
+  border-top: 1px solid #eee;
+  position: relative;
+}
+.comment .expand {
+  cursor: pointer;
+}
+.comment .by,
+.comment .text {
+  font-size: 0.9em;
+  padding: 1em 0;
+}
+.comment .by {
+  color: #999;
+  padding-bottom: 0;
+}
+.comment .by a {
+  color: #999;
+  text-decoration: underline;
+}
+.comment .text a:hover {
+  color: #f60;
+}
