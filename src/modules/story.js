@@ -58,10 +58,7 @@ const fetchOne = type => action$ =>
   action$
     .ofType(`story/${type}/fetchOne`)
     .mergeMap(({ payload }) => Observable.from(fetchItem(payload)))
-    .map(story => {
-      console.log(story);
-      return normalize(story, Schemas.STORY)
-    })
+    .map(story => normalize(story, Schemas.STORY))
     .map(normalized => ({ type: 'entity/set', payload: normalized }))
 
 export const createEpic = type => combineEpics(
