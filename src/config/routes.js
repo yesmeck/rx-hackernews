@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
-import App from './containers/App';
-import * as Story from './containers/Story'
-import * as User from './containers/User'
+import App from '../containers/App';
+import * as Story from '../containers/Story'
+import * as User from '../containers/User'
 
 export default function routes() {
   return (

@@ -57,7 +57,7 @@ export default class List extends Component {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}
         >
-          {stories.map(story => <Item key={story.get('id')} story={story} />)}
+          {stories.map(story => <Item key={story.id} story={story} />)}
         </TransitionGroup>
       )
     }

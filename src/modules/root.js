@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
 import { combineEpics } from 'redux-observable';
-import * as store from './store';
+import * as entity from './entity';
+import * as story from './story';
 import user from './user';
 
 export const reducer = combineReducers({
-  store: store.reducer,
+  entity: entity.reducer,
+  story: story.reducer,
   user,
 });
 
 export const epic = combineEpics(
-  store.watchEpic,
+  story.epic,
 );

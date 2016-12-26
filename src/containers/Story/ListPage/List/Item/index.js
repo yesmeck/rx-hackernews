@@ -9,48 +9,48 @@ export default function Item({ story }) {
   let commentLink = null
   let label = null
 
-  if (story.get('url')) {
+  if (story.url) {
     title = (
       <span className="title">
-        <a href={story.get('url')} target="_blank">{story.get('title')}</a>
-        <span className="host">({host(story.get('url'))})</span>
+        <a href={story.url} target="_blank">{story.title}</a>
+        <span className="host">({host(story.url)})</span>
       </span>
     )
   } else {
     title = (
       <span className="title">
-        <Link to={`/items/${story.get('id')}`}>{story.get('title')}</Link>
+        <Link to={`/items/${story.id}`}>{story.title}</Link>
       </span>
     )
   }
 
-  if (story.get('type') !== 'job') {
+  if (story.type !== 'job') {
     author = (
       <span className="by">
-        by <Link to={`/users/${story.get('by')}`} className="">{story.get('by')}</Link>
+        by <Link to={`/users/${story.by}`} className="">{story.by}</Link>
       </span>
     )
 
     commentLink = (
       <span className="comments-link">
-        | <Link to={`/items/${story.get('id')}`}>{story.get('descendants')} comments</Link>
+        | <Link to={`/items/${story.id}`}>{story.descendants} comments</Link>
       </span>
     )
   }
 
-  if (story.get('type') !== 'story') {
-    label = <span className="label"> {story.get('type')}</span>
+  if (story.type !== 'story') {
+    label = <span className="label"> {story.type}</span>
   }
 
   return (
     <li className="news-item">
-      <span className="score">{story.get('score')}</span>
+      <span className="score">{story.score}</span>
       {title}
       <br />
       <span className="meta">
         {author}
         <span className="time">
-          {timeAgo(story.get('time'))} ago
+          {timeAgo(story.time)} ago
         </span>
         {commentLink}
       </span>

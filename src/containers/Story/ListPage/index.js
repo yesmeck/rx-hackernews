@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import * as story from '../../../modules/store'
+import * as story from '../../../modules/story'
 import List from './List'
 
 export default function createListPage(type) {
@@ -29,5 +29,6 @@ export default function createListPage(type) {
   }
 
   return connect((state, props) => ({
+    stories: story.selectList(state, props.params.page)
   }))(ListPage)
 }
