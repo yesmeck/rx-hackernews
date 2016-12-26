@@ -9,26 +9,26 @@ export default function Item({ story }) {
   let hostSpan = null
   let comments = null
 
-  if (story.get('url')) {
+  if (story.url) {
     title = (
-      <a href={story.get('url')} target="_blank">
-        <h1>{story.get('title')}</h1>
+      <a href={story.url} target="_blank">
+        <h1>{story.title}</h1>
       </a>
     )
 
     hostSpan = (
       <span className="host">
-        ({host(story.get('url'))})
+        ({host(story.url)})
       </span>
     )
   } else {
-    title = <h1>{story.get('title')}</h1>
+    title = <h1>{story.title}</h1>
   }
 
-  if (story.get('kids')) {
+  if (story.kids) {
     comments = (
       <ul className="comment-children">
-        {story.get('kids').map(id => <Comment key={id} id={id} />)}
+        {story.kids.map(id => <Comment key={id} id={id} />)}
       </ul>
     )
   }
@@ -39,14 +39,14 @@ export default function Item({ story }) {
         {title}
         {hostSpan}
         <p className="meta">
-          {story.get('score')} points
-          | by <Link to={`/users/${story.get('by')}`}>{story.get('by')}</Link>
-          {timeAgo(story.get('time'))} ago
+          {story.score} points
+          | by <Link to={`/users/${story.by}`}>{story.by}</Link>
+          {timeAgo(story.time)} ago
         </p>
       </div>
       <div className="item-view-comments">
         <p className="item-view-comments-header">
-          {story.get('kids') ? story.get('descendants') + ' comments' : 'No comments yet.'}
+          {story.kids ? story.descendants + ' comments' : 'No comments yet.'}
         </p>
         {comments}
       </div>

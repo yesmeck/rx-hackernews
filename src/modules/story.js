@@ -5,59 +5,76 @@ import { combineEpics } from 'redux-observable';
 import { createSelector } from 'reselect';
 import Schemas from '../config/schemas';
 import { watchIdsByType, fetchItems, fetchItem } from '../services/db';
-
-const PER_PAGE = 20;
+import { PAGE_SIZE } from '../config/constants';
 
 const initialState = {
   loading: false,
   ids: [],
 };
 
-export const reducer = (state = initialState, { type, payload}) => {
-  switch (type) {
-    case 'story/watch':
-      return {
-        ...state,
-        loading: true,
-      };
-    case 'story/setIds':
-      return {
-        ...state,
-        loading: false,
-        ids: payload,
-      };
-    default:
-      return state;
+export const createReducer = type =>
+  (state = initialState, { type: actionType, payload}) => {
+    switch (actionType) {
+      case `story/${type}/watch`:
+        return {
+          ...state,
+          loading: true,
+        };
+      case `story/${type}/setIds`:
+        return {
+          ...state,
+          loading: false,
+          ids: payload,
+        };
+      default:
+        return state;
+    }
+    return state;
   }
-  return state;
-}
 
-const watchEpic = (action$) =>
+const watchEpic = type => action$ =>
   action$
-    .ofType('story/watch')
+    .ofType(`story/${type}/watch`)
     .mergeMap(() =>
-      Observable.bindCallback(watchIdsByType)('top')
-      .takeUntil(action$.ofType('story/cancelWatch'))
+      Observable.bindCallback(watchIdsByType)(type)
+      .takeUntil(action$.ofType(`story/${type}/cancelWatch`))
     )
     .mergeMap(ids => Observable.from(fetchItems(ids)))
     .map(stories => normalize(stories, Schemas.STORY_ARRAY))
     .mergeMap(normalized =>
       Observable.concat(
-        Observable.of({ type: 'entity/set', payload: normalized }),
-        Observable.of({ type: 'story/setIds', payload: normalized.result }),
+        Observable.of({
+          type: 'entity/set',
+          payload: normalized
+        }),
+        Observable.of({
+          type: `story/${type}/setIds`,
+          payload: normalized.result
+        }),
       )
     );
 
-export const epic = combineEpics(
-  watchEpic,
+const fetchOne = type => action$ =>
+  action$
+    .ofType(`story/${type}/fetchOne`)
+    .mergeMap(({ payload }) => Observable.from(fetchItem(payload)))
+    .map(story => {
+      console.log(story);
+      return normalize(story, Schemas.STORY)
+    })
+    .map(normalized => ({ type: 'entity/set', payload: normalized }))
+
+export const createEpic = type => combineEpics(
+  watchEpic(type),
+  fetchOne(type),
 )
 
 export const selectList = createSelector(
   state => state.entity.story,
-  (state, page = 1) => {
-    const start = (page - 1) * PER_PAGE
-    const end = page * PER_PAGE
-    return state.story.ids.slice(start, end)
+  (state, type, page = 1) => {
+    const start = (page - 1) * PAGE_SIZE
+    const end = page * PAGE_SIZE
+    return state.story[type].ids.slice(start, end)
   },
   (stories, ids) => ids.map(id => stories[id])
 );

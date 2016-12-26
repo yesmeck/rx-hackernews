@@ -28,8 +28,8 @@ export default function App({ location, children }) {
             <img src={logo} alt="logo" className="logo" />
           </Link>
           {links}
-          <a href="https://github.com/feeblejs/hackernews" target="_blank" className="github">
-            Built with Feeble
+          <a href="https://github.com/yesmeck/rx-hackernews" target="_blank" className="github">
+            Source
           </a>
         </div>
       </div>

@@ -1,7 +1,13 @@
 import merge from 'lodash/fp/merge';
 
 const initialState = {
-  story: {},
+  story: {
+    top: {},
+    new: {},
+    show: {},
+    ask: {},
+    job: {},
+  },
   user: {},
 };
 

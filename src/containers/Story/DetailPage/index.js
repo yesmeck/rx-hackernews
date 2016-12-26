@@ -6,7 +6,7 @@ class DetailPage extends Component {
   componentWillMount() {
     const { dispatch, story, params: { id } }  = this.props
     if (!story) {
-      dispatch()
+      dispatch({ type: 'story/top/fetchOne', payload: id });
     }
   }
 
@@ -17,5 +17,6 @@ class DetailPage extends Component {
   }
 }
 
-export default connect((state, props) => ({
+export default connect((state, { params }) => ({
+  story: state.entity.story[params.id]
 }))(DetailPage)

@@ -6,7 +6,7 @@ class DetailPage extends Component {
   componentWillMount() {
     const { dispatch, user, params: { id } } = this.props
     if (!user) {
-      dispatch()
+      dispatch({ type: 'user/fetch', payload: id });
     }
   }
 
@@ -19,5 +19,6 @@ class DetailPage extends Component {
   }
 }
 
-export default connect((state, props) => ({
+export default connect((state, { params }) => ({
+  user: state.entity.user[params.id]
 }))(DetailPage)

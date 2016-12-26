@@ -23,7 +23,7 @@ class Comment extends Component {
   componentWillMount() {
     const { dispatch, story, id }  = this.props
     if (!story) {
-      dispatch()
+      dispatch({ type: 'story/top/fetchOne', payload: id });
     }
   }
 
@@ -42,11 +42,11 @@ class Comment extends Component {
     let openLink = null
     let comments = null
 
-    if (comment.get('kids') && comment.get('kids').length > 0) {
+    if (comment.kids && comment.kids.length > 0) {
       openLink = (
         <span>
           | <a className="expand" onClick={this.handleClick}>
-            {open ? 'collapse ' : 'expand ' + pluralize(comment.get('kids').length)}
+            {open ? 'collapse ' : 'expand ' + pluralize(comment.kids.length)}
           </a>
         </span>
       )
@@ -55,7 +55,7 @@ class Comment extends Component {
     if (open) {
       comments = (
         <ul className="comment-children">
-          {comment.get('kids').map(id => <ConnectedComment key={id} id={id} />)}
+          {comment.kids.map(id => <ConnectedComment key={id} id={id} />)}
         </ul>
       )
     }
@@ -63,18 +63,19 @@ class Comment extends Component {
     return (
       <li className="comment">
         <div className="by">
-          <Link to={`/users/${comment.by}`}>{comment.get('by')}</Link>
-          {timeAgo(comment.get('time'))} ago
+          <Link to={`/users/${comment.by}`}>{comment.by}</Link>
+          {timeAgo(comment.time)} ago
           {openLink}
         </div>
-        <div className="text" dangerouslySetInnerHTML={{__html: comment.get('text')}} />
+        <div className="text" dangerouslySetInnerHTML={{__html: comment.text}} />
         {comments}
       </li>
     )
   }
 }
 
-const ConnectedComment = connect((state, props) => ({
+const ConnectedComment = connect((state, { id }) => ({
+  comment: state.entity.story[id]
 }))(Comment)
 
-export default ConnectedComment
+export default ConnectedComment;
