@@ -14,8 +14,8 @@ HackerNews clone built with React/Redux/redux-observable. Ports from [vue-hacker
 
 ```bash
 # install dependencies
-npm install
+yarn install
 
 # serve in development mode
-npm start
+yarn start
 ```
