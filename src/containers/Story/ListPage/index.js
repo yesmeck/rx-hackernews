@@ -31,7 +31,7 @@ export default function createListPage(type) {
 
   return connect((state, props) => ({
     stories: story.selectList(state, type, props.params.page),
-    maxPage: state.story[type].ids.length / PAGE_SIZE,
+    maxPage: Math.ceil(state.story[type].ids.length / PAGE_SIZE),
     loading: state.story[type].loading,
   }))(ListPage)
 }
