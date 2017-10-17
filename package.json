@@ -23,7 +23,7 @@
   "scripts": {
     "now-start": "list ./build --single",
     "start": "react-scripts start",
-    "build": "react-scripts build && echo '/*    /index.html   200' > build/_redirects"
+    "build": "react-scripts build && echo '/*    /index.html   200' > build/_redirects",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "now"
