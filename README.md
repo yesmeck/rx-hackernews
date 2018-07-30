@@ -3,7 +3,7 @@
 HackerNews clone built with React/Redux/redux-observable. Ports from [vue-hackernews-2.0](https://github.com/vuejs/vue-hackernews-2.0).
 
 <p align="center">
-  <a href="https://64lyz7zkzr.codesandbox.io" target="_blank">
+  <a href="https://rx-hackernews.netlify.com/top" target="_blank">
     <img src="https://raw.githubusercontent.com/feeblejs/hackernews/master/screenshot.png" width="700px">
     <br>
     Live Demo
